@@ -63,6 +63,6 @@ void displayWAVHDR(struct WAVHDR h){
         printf("sample rate =%d        \n", h.SampleRate);
  	setColors(WHITE, bg(MAGENTA));
         printf("\033[1;61H");
-        printf("duration = .2f        \n", (float) h.Subchunk2Size/h.ByteRate);
+        printf("duration = %.2f        \n", (float) h.Subchunk2Size/h.ByteRate);
 #endif
 }
