@@ -1,26 +1,28 @@
 //constants definition
-#define RATE 16000//samples per second
+//#define DEBUG
+#define RATE 16000 //samples per second
 #define CMD "arecord -r16000 -c1 -f S16_LE -d1 -q test.wav"
 
-//data sturctures
+
+//data structures
+
 struct WAVHDR{
-	char ChunkID[4];//it has to be "RIFF"
-	int ChunkSize;//4 byte number
-	char Format[4];//it has to be "WAVE"
-	
-	char Subchunk1ID[4];//"fmt "
-	int Subchunk1Size;//PCM = 16
-	short AudioFormat; //should be 1
-	short NumChannels;//should be 1 for mono
-	int SampleRate;//16000
-	int ByteRate;//16000*Numchannels*BitsPerSample/8
-	short BlockAlign;//NumChannels*BitsPerSaple/8
-	short BitsPersample;//in our app, 16 (S16_LE)
+        char ChunkID[4];        //it has to be "RIFF"
+        int ChunkSize;          //4-byte number
+        char Format[4];         //it has to be "WAVE"
 
-	char Subchunk2ID[4];//"data"
-	int Subchunk2Size;
+        char Subchunk1ID[4];    //"fmt "
+        int Subchunk1Size;      //PCM=16
+        short AudioFormat;      //should be 1
+        short NumChannels;      //should be 1 for mono
+        int SampleRate;         //16000
+        int ByteRate;           //16000 * NumChannels * BitsPerSample/8
+        short BlockAlign;       //in out app, 16 (-f S16_LE)
+        short BitsPerSample;
+
+        char Subchunk2ID[4];    //"data"
+        int Subchunk2Size;      //
 };
-
-//function declarations 
+//function declerations
 void displayWAVHDR(struct WAVHDR h);
 void displayWAVDATA(short []);
