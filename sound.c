@@ -140,11 +140,6 @@ void testTone(int c, int f, float d)
 	}
 
 	// prepare sound data
-	short data[441000];		//[d*h.SampleRate];
-	for(int i = 0; i < d*h.SampleRate; i++)
-	{
-		data[i] = 32767.0 * sin(2*PI*i*f/44100);
-	}
 
 	FILE *fp = fopen("testTone.wav", "w");
 	if(fp == NULL)
@@ -153,7 +148,16 @@ void testTone(int c, int f, float d)
 		return;
 	}
 	fwrite(&h, sizeof(h), 1, fp);	// write the header
-	fwrite(data, d*h.SampleRate*sizeof(short), 1, fp);
+	for(int i = 0; i < d*h.SampleRate; i++)
+	{
+		short data = 32767.0 * sin(2*PI*i*f/44100);
+		fwrite(&data, sizeof(short), 1, fp);
+		if(c == 2){
+			short dR = 32767.0 * sin(2*PI*i*f/2/44100);
+			fwrite(&dR, sizeof(short), 1, fp);
+		}
+	}
+
 	fclose(fp);
 	printf("Test tone is generated!\n");
 }
